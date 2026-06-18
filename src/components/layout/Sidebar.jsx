@@ -79,17 +79,39 @@ function Sidebar({ isOpen, onClose }) {
       </nav>
 
       <div className="shrink-0 px-4 pb-5 pt-3">
-        <div className="rounded-2xl bg-gradient-to-br from-[#5D5FEF] to-[#7B6CF6] px-4 py-4 text-white">
-          <p className="text-[13px] font-semibold">Dabang Pro</p>
-          <p className="mt-1.5 text-[11px] leading-relaxed text-white/85">
-            Get access to all features on tetumbas
-          </p>
-          <button
-            type="button"
-            className="mt-3.5 w-full rounded-lg bg-white py-2 text-[11px] font-semibold text-[#5D5FEF] transition-colors hover:bg-white/90"
-          >
-            Get Pro
-          </button>
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#5D5FEF] via-[#6366F1] to-[#7B5CF6] px-5 pt-6 pb-0 text-center">
+          <div className="pointer-events-none absolute -right-8 -top-8 h-28 w-28 rounded-full bg-white/10" />
+          <div className="pointer-events-none absolute -bottom-10 -left-6 h-32 w-32 rounded-full bg-white/[0.08]" />
+          <div className="pointer-events-none absolute bottom-6 right-4 h-14 w-14 rounded-full bg-white/[0.06]" />
+
+          <div className="relative flex flex-col items-center">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-white shadow-sm">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path
+                  d="M6 5L12 19L18 5"
+                  stroke="#5D5FEF"
+                  strokeWidth="2.8"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+
+            <h3 className="text-base font-bold text-white">Dabang Pro</h3>
+
+            <p className="mt-2 max-w-[170px] text-xs leading-relaxed text-white/90">
+              Get access to all features on tetumbas
+            </p>
+
+            <div className="mt-5 w-full px-4 pb-4">
+              <button
+                type="button"
+                className="w-full rounded-lg bg-white px-6 py-3 text-sm font-semibold text-[#5D5FEF] transition-colors hover:bg-white/95"
+              >
+                Get Pro
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </aside>

@@ -24,7 +24,7 @@ function TodaysSales() {
         {salesStats.map((stat) => (
           <div
             key={stat.id}
-            className={`flex min-h-[148px] flex-col rounded-2xl px-4 py-4 ${stat.bgColor}`}
+            className={`flex min-h-[148px] flex-col rounded-2xl px-5 py-5 ${stat.bgColor}`}
           >
             <div
               className={`mb-3 flex h-10 w-10 items-center justify-center rounded-full ${stat.iconBg} text-sm text-white`}

@@ -1,92 +1,204 @@
-import { useState, useEffect, useMemo } from 'react'
-import { Search, ArrowUpDown, ArrowUp, ArrowDown, Loader2, AlertCircle } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+import axios from 'axios'
+import { useQuery } from '@tanstack/react-query'
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table'
+import {
+  ArrowLeftRight,
+  ChevronLeft,
+  ChevronRight,
+  ListRestart,
+  Loader2,
+  AlertCircle,
+} from 'lucide-react'
+import getColumns from './get-columns'
 import Card from '../dashboard/Card'
 import CardHeader from '../dashboard/CardHeader'
+import { SearchInput } from '../ui/search-input'
+import { Button } from '../ui/button'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table'
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 
 const API_URL = 'https://jsonplaceholder.typicode.com/users'
+const PAGE_SIZE = 10
 
-function UsersTable() {
-  const [users, setUsers] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [searchQuery, setSearchQuery] = useState('')
-  const [cityFilter, setCityFilter] = useState('')
-  const [sortOrder, setSortOrder] = useState('asc')
+function applyFilters(users, search, city) {
+  let result = [...users]
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        setLoading(true)
-        setError(null)
-        const response = await fetch(API_URL)
-        if (!response.ok) {
-          throw new Error(`Failed to fetch users (${response.status})`)
-        }
-        const data = await response.json()
-        setUsers(data)
-      } catch (err) {
-        setError(err.message || 'Something went wrong while fetching users.')
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchUsers()
-  }, [])
-
-  const cities = useMemo(() => {
-    const uniqueCities = [...new Set(users.map((user) => user.address.city))]
-    return uniqueCities.sort()
-  }, [users])
-
-  const filteredUsers = useMemo(() => {
-    let result = [...users]
-
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase()
-      result = result.filter(
-        (user) =>
-          user.name.toLowerCase().includes(query) ||
-          user.email.toLowerCase().includes(query)
-      )
-    }
-
-    if (cityFilter) {
-      result = result.filter((user) => user.address.city === cityFilter)
-    }
-
-    result.sort((a, b) => {
-      const comparison = a.name.localeCompare(b.name)
-      return sortOrder === 'asc' ? comparison : -comparison
-    })
-
-    return result
-  }, [users, searchQuery, cityFilter, sortOrder])
-
-  const toggleSort = () => {
-    setSortOrder((prev) => (prev === 'asc' ? 'desc' : 'asc'))
+  if (search?.trim()) {
+    const query = search.toLowerCase()
+    result = result.filter(
+      (user) =>
+        user.name.toLowerCase().includes(query) ||
+        user.email.toLowerCase().includes(query)
+    )
   }
 
-  if (loading) {
+  if (city) {
+    result = result.filter((user) => user.address.city === city)
+  }
+
+  return result
+}
+
+function applySorting(users, sortColumn, sortDesc) {
+  if (!sortColumn) return users
+
+  const sorted = [...users]
+
+  sorted.sort((a, b) => {
+    let aValue = ''
+    let bValue = ''
+
+    if (sortColumn === 'name') {
+      aValue = a.name
+      bValue = b.name
+    } else if (sortColumn === 'email') {
+      aValue = a.email
+      bValue = b.email
+    } else if (sortColumn === 'company_name') {
+      aValue = a.company.name
+      bValue = b.company.name
+    } else if (sortColumn === 'city') {
+      aValue = a.address.city
+      bValue = b.address.city
+    }
+
+    const comparison = aValue.localeCompare(bValue)
+    return sortDesc ? -comparison : comparison
+  })
+
+  return sorted
+}
+
+const UsersTable = () => {
+  const [filter, setFilter] = useState('')
+  const [cityFilter, setCityFilter] = useState('')
+  const [globalFilter, setGlobalFilter] = useState('')
+  const [sorting, setSorting] = useState([])
+  const [columnVisibility, setColumnVisibility] = useState({})
+  const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: PAGE_SIZE })
+  const [pageCount, setPageCount] = useState(1)
+  const [allCities, setAllCities] = useState([])
+
+  useEffect(() => {
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+  }, [globalFilter, cityFilter])
+
+  const getAllUsers = async ({ queryKey }) => {
+    const [, search, city, page, sortColumn, sortDesc] = queryKey
+
+    try {
+      const response = await axios.get(API_URL)
+      const allUsers = response.data
+
+      const cities = [...new Set(allUsers.map((user) => user.address.city))].sort()
+      setAllCities(cities)
+
+      const filtered = applyFilters(allUsers, search, city)
+      const sorted = applySorting(filtered, sortColumn, sortDesc)
+      const totalPages = Math.max(1, Math.ceil(sorted.length / PAGE_SIZE))
+      const start = page * PAGE_SIZE
+
+      setPageCount(totalPages)
+
+      return {
+        rows: sorted.slice(start, start + PAGE_SIZE),
+        total: sorted.length,
+        allTotal: allUsers.length,
+      }
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error?.message ||
+        'Something went wrong while fetching users.'
+      throw new Error(message)
+    }
+  }
+
+  const { data, isLoading, isError, error, refetch, isFetching } = useQuery({
+    queryKey: [
+      'users',
+      globalFilter,
+      cityFilter,
+      pagination.pageIndex,
+      sorting.at(0)?.id,
+      sorting.at(0)?.desc,
+    ],
+    queryFn: getAllUsers,
+    retry: 1,
+    placeholderData: (previous) => previous,
+  })
+
+  const tableData = useMemo(() => data?.rows ?? [], [data])
+
+  const resetFilters = () => {
+    setFilter('')
+    setGlobalFilter('')
+    setCityFilter('')
+    setColumnVisibility({})
+    setSorting([])
+    setPagination({ pageIndex: 0, pageSize: PAGE_SIZE })
+  }
+
+  const columns = getColumns()
+
+  const table = useReactTable({
+    columns,
+    data: tableData,
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    manualFiltering: true,
+    manualPagination: true,
+    manualSorting: true,
+    onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
+    onSortingChange: (updater) => {
+      setSorting(updater)
+      setPagination((prev) => ({ ...prev, pageIndex: 0 }))
+    },
+    pageCount,
+    sortDescFirst: false,
+    state: { columnVisibility, pagination, sorting },
+  })
+
+  if (isLoading) {
     return (
       <Card className="flex flex-col items-center justify-center py-20">
-        <Loader2 size={40} className="animate-spin text-[#5B5FEF]" />
-        <p className="mt-4 text-sm text-[#8A8A8A]">Loading users...</p>
+        <Loader2 size={40} className="animate-spin text-[#5D5FEF]" />
+        <p className="mt-4 text-sm text-[#737791]">Loading users...</p>
       </Card>
     )
   }
 
-  if (error) {
+  if (isError) {
     return (
       <Card className="flex flex-col items-center justify-center py-20">
         <AlertCircle size={40} className="text-red-500" />
-        <p className="mt-4 text-sm font-medium text-red-600">{error}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="mt-4 rounded-lg bg-[#5B5FEF] px-4 py-2 text-sm font-medium text-white hover:bg-[#4a4ed4]"
-        >
+        <p className="mt-4 text-sm font-medium text-red-600">{error?.message}</p>
+        <Button className="mt-4" onClick={() => refetch()}>
           Retry
-        </button>
+        </Button>
       </Card>
     )
   }
@@ -95,74 +207,124 @@ function UsersTable() {
     <Card>
       <CardHeader
         title="Users"
-        subtitle={`${filteredUsers.length} of ${users.length} users`}
-        action={
-          <div className="flex flex-wrap items-center gap-3">
-          <div className="relative">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#A3A9C2]" />
-            <input
-              type="text"
-              placeholder="Search by name or email..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="rounded-xl border border-[#ECEFF5] py-2.5 pl-9 pr-4 text-sm outline-none focus:border-[#5D5FEF] focus:ring-2 focus:ring-[#5D5FEF]/20"
-            />
-          </div>
-
-          <select
-            value={cityFilter}
-            onChange={(e) => setCityFilter(e.target.value)}
-            className="rounded-xl border border-[#ECEFF5] px-4 py-2.5 text-sm outline-none focus:border-[#5D5FEF] focus:ring-2 focus:ring-[#5D5FEF]/20"
-          >
-            <option value="">All Cities</option>
-            {cities.map((city) => (
-              <option key={city} value={city}>
-                {city}
-              </option>
-            ))}
-          </select>
-
-          <button
-            onClick={toggleSort}
-            className="flex items-center gap-2 rounded-xl border border-[#ECEFF5] px-4 py-2.5 text-sm font-medium text-[#151D48] transition-colors hover:bg-[#F8F9FB]"
-          >
-            {sortOrder === 'asc' ? <ArrowUp size={16} /> : <ArrowDown size={16} />}
-            Sort by Name ({sortOrder === 'asc' ? 'A–Z' : 'Z–A'})
-            <ArrowUpDown size={14} className="text-[#737791]" />
-          </button>
-          </div>
-        }
+        subtitle={`${data?.total ?? 0} of ${data?.allTotal ?? 0} users${isFetching ? ' · Updating...' : ''}`}
       />
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-[#ECEFF5] text-left text-xs font-medium text-[#737791]">
-              <th className="pb-3 pr-6 font-medium">Name</th>
-              <th className="pb-3 pr-6 font-medium">Email</th>
-              <th className="pb-3 pr-6 font-medium">Company Name</th>
-              <th className="pb-3 font-medium">City</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredUsers.length === 0 ? (
-              <tr>
-                <td colSpan={4} className="py-10 text-center text-[#737791]">
-                  No users found matching your criteria.
-                </td>
-              </tr>
-            ) : (
-              filteredUsers.map((user) => (
-                <tr key={user.id} className="border-b border-[#F8F9FB] transition-colors hover:bg-[#F8F9FB]/60">
-                  <td className="py-4 pr-6 font-medium text-[#151D48]">{user.name}</td>
-                  <td className="py-4 pr-6 text-[#737791]">{user.email}</td>
-                  <td className="py-4 pr-6 text-[#151D48]">{user.company.name}</td>
-                  <td className="py-4 text-[#737791]">{user.address.city}</td>
-                </tr>
+      <div className="mb-5 flex w-full flex-wrap justify-end gap-2">
+        <SearchInput
+          className="w-full sm:w-72"
+          variant="default"
+          name="search-input"
+          placeholder="Search by name or email..."
+          value={filter}
+          onChange={(event) => setFilter(event.target.value)}
+          onDebouncedChange={setGlobalFilter}
+          debounceMs={500}
+        />
+
+        <select
+          value={cityFilter}
+          onChange={(event) => setCityFilter(event.target.value)}
+          className="h-10 rounded-xl border border-[#ECEFF5] bg-white px-4 text-sm text-[#151D48] outline-none focus:border-[#5D5FEF] focus:ring-2 focus:ring-[#5D5FEF]/20"
+        >
+          <option value="">All Cities</option>
+          {allCities.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+
+        <Button onClick={resetFilters} variant="outline">
+          <ListRestart size={16} />
+          Reset
+        </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <ArrowLeftRight size={16} />
+              Columns
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" side="bottom">
+            {table
+              .getAllColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => (
+                <DropdownMenuCheckboxItem
+                  key={column.id}
+                  checked={column.getIsVisible()}
+                  onCheckedChange={(value) => column.toggleVisibility(!!value)}
+                >
+                  {column.id.replace(/_/g, ' ')}
+                </DropdownMenuCheckboxItem>
+              ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
+      <div className="w-full flex-1 rounded-xl border border-[#ECEFF5]">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id} className="hover:bg-transparent">
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(header.column.columnDef.header, header.getContext())}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows?.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
               ))
+            ) : (
+              <TableRow className="hover:bg-transparent">
+                <TableCell colSpan={columns.length} className="h-24 text-center text-red-500">
+                  No results!
+                </TableCell>
+              </TableRow>
             )}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
+      </div>
+
+      <div className="flex w-full flex-col items-center justify-center gap-2 p-2 sm:flex-row sm:justify-between">
+        <span className="text-sm text-[#737791]">
+          {`Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount() || 1}`}
+        </span>
+        <div className="flex items-center justify-center space-x-2">
+          <Button
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+            size="lg"
+            variant="ghost"
+          >
+            <ChevronLeft size={16} />
+            Prev
+          </Button>
+          <Button
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+            size="lg"
+            variant="ghost"
+          >
+            Next
+            <ChevronRight size={16} />
+          </Button>
+        </div>
       </div>
     </Card>
   )
