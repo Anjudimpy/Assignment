@@ -13,7 +13,7 @@ A React application implementing the **Dabang Sales Dashboard** UI design (Part 
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/Anjudimpy/Assignment.git
 cd Test
 
 # Install dependencies
