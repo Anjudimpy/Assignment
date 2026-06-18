@@ -13,7 +13,7 @@ import { satisfactionData } from '../../data/dummyData'
 
 function CustomerSatisfaction() {
   return (
-    <Card className="col-span-12 md:col-span-6 lg:col-span-4">
+    <Card className="col-span-12 md:col-span-6 lg:col-span-3">
       <CardHeader title="Customer Satisfaction" />
       <div className="min-w-0 w-full">
         <ResponsiveContainer width="100%" height={200}>

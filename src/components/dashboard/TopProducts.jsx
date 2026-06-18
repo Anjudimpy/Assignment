@@ -11,7 +11,7 @@ const badgeColors = {
 
 function TopProducts() {
   return (
-    <Card className="col-span-12 lg:col-span-5">
+    <Card className="col-span-12 lg:col-span-6">
       <CardHeader title="Top Products" />
       <div className="overflow-x-auto">
         <table className="w-full min-w-[480px] text-sm">

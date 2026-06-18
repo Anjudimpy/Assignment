@@ -14,7 +14,7 @@ import { revenueData } from '../../data/dummyData'
 
 function TotalRevenue() {
   return (
-    <Card className="col-span-12 lg:col-span-5">
+    <Card className="col-span-12 lg:col-span-6">
       <CardHeader title="Total Revenue" />
       <div className="min-w-0 w-full">
         <ResponsiveContainer width="100%" height={220}>

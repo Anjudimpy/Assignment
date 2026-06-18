@@ -14,10 +14,10 @@ import { visitorInsightsData } from '../../data/dummyData'
 
 function VisitorInsights() {
   return (
-    <Card className="col-span-12 lg:col-span-5">
+    <Card className="col-span-12 h-full lg:col-span-4">
       <CardHeader title="Visitor Insights" />
-      <div className="min-w-0 w-full">
-        <ResponsiveContainer width="100%" height={230}>
+      <div className="min-h-0 w-full flex-1">
+        <ResponsiveContainer width="100%" height="100%" minHeight={220}>
         <LineChart data={visitorInsightsData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#ECEFF5" vertical={false} />
           <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#737791' }} axisLine={false} tickLine={false} />

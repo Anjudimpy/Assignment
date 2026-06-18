@@ -9,7 +9,7 @@
   --color-text-primary: #151d48;
   --color-text-secondary: #737791;
   --color-text-muted: #a3a9c2;
-  --sidebar-width: 240px;
+  --sidebar-width: 252px;
   --card-radius: 16px;
   --input-radius: 12px;
   --card-padding: 24px;
@@ -33,4 +33,14 @@ body {
 
 #root {
   min-height: 100vh;
+}
+
+/* Hide sidebar scrollbar while keeping scroll on very short screens */
+.sidebar-nav {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-nav::-webkit-scrollbar {
+  display: none;
 }

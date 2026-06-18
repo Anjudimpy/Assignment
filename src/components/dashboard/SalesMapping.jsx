@@ -4,7 +4,7 @@ import { mapRegions } from '../../data/dummyData'
 
 function SalesMapping() {
   return (
-    <Card className="col-span-12 md:col-span-6 lg:col-span-4">
+    <Card className="col-span-12 md:col-span-6 lg:col-span-3">
       <CardHeader title="Sales Mapping by Country" />
       <div className="relative h-[210px] w-full min-w-0 overflow-hidden rounded-xl bg-[#F8F9FB] p-3">
         <svg viewBox="0 0 100 80" className="h-full w-full" preserveAspectRatio="xMidYMid meet">

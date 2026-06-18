@@ -22,7 +22,7 @@ function Layout({ title }) {
         style={{ gridTemplateColumns: 'var(--sidebar-width) minmax(0, 1fr)' }}
       >
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="min-w-0 overflow-x-hidden px-4 py-5 sm:px-6 sm:py-6 lg:px-8 lg:py-7">
+        <main className="min-w-0 overflow-x-hidden px-5 py-5 sm:px-7 sm:py-6 lg:px-9 lg:py-7">
           <div className="mx-auto w-full max-w-[1440px]">
             <TopNav title={title} onMenuClick={() => setSidebarOpen(true)} />
             <Outlet />

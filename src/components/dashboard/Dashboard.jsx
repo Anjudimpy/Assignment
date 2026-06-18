@@ -9,7 +9,7 @@ import VolumeVsService from './VolumeVsService'
 
 function Dashboard() {
   return (
-    <div className="grid min-w-0 grid-cols-12 gap-6">
+    <div className="grid min-w-0 grid-cols-12 items-stretch gap-6">
       <TodaysSales />
       <VisitorInsights />
       <TotalRevenue />
