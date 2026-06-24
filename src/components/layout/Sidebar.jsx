@@ -45,7 +45,7 @@ function Sidebar({ isOpen, onClose }) {
         </button>
       </div>
 
-      <nav className="sidebar-nav flex flex-1 flex-col gap-5 overflow-y-auto px-4">
+      <nav className="sidebar-nav flex flex-1 flex-col gap-0.5 overflow-y-auto px-4">
         {navItems.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -53,14 +53,14 @@ function Sidebar({ isOpen, onClose }) {
             end={to === '/'}
             onClick={onClose}
             className={({ isActive }) =>
-              `flex items-center w-40   gap-2.5 rounded-xl text-[18px]  font-medium transition-colors ${
+              `flex items-center gap-2.5 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors ${
                 isActive
                   ? 'bg-primary text-white'
                   : 'text-text-secondary hover:bg-page-bg hover:text-text-primary'
               }`
             }
           >
-            <Icon size={24} className="" />
+            <Icon size={17} className="shrink-0" strokeWidth={1.75} />
             <span className="truncate">{label}</span>
           </NavLink>
         ))}
