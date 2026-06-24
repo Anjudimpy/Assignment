@@ -52,7 +52,7 @@ function DropdownMenuContent({ children, align = 'end' }) {
   return (
     <div
       ref={ref}
-      className={`absolute top-full z-50 mt-2 min-w-[180px] rounded-xl border border-[#ECEFF5] bg-white p-1 shadow-[0_4px_20px_rgba(0,0,0,0.08)] ${
+      className={`absolute top-full z-50 mt-2 min-w-[180px] rounded-xl border border-border bg-card-bg p-1 shadow-[0_4px_20px_rgba(0,0,0,0.08)] ${
         align === 'end' ? 'right-0' : 'left-0'
       }`}
     >
@@ -64,13 +64,13 @@ function DropdownMenuContent({ children, align = 'end' }) {
 function DropdownMenuCheckboxItem({ children, checked, onCheckedChange, className = '' }) {
   return (
     <label
-      className={`flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm capitalize text-[#151D48] hover:bg-[#F8F9FB] ${className}`}
+      className={`flex cursor-pointer items-center gap-2 rounded-lg px-3 py-2 text-sm capitalize text-text-primary hover:bg-page-bg ${className}`}
     >
       <input
         type="checkbox"
         checked={checked}
         onChange={(e) => onCheckedChange?.(e.target.checked)}
-        className="accent-[#5D5FEF]"
+        className="accent-primary"
       />
       {children}
     </label>

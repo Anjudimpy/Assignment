@@ -18,12 +18,12 @@ function TopNav({ title = 'Dashboard', onMenuClick }) {
         <button
           type="button"
           onClick={onMenuClick}
-          className="shrink-0 rounded-xl p-2 text-[#737791] hover:bg-white lg:hidden"
+          className="shrink-0 rounded-xl p-2 text-text-secondary hover:bg-card-bg lg:hidden"
           aria-label="Open menu"
         >
           <Menu size={22} />
         </button>
-        <h1 className="truncate text-xl font-bold text-[#151D48] sm:text-2xl">{title}</h1>
+        <h1 className="truncate text-xl font-bold text-text-primary sm:text-2xl">{title}</h1>
       </div>
 
       <div className="w-full min-w-0 lg:max-w-xl lg:justify-self-center">
@@ -40,32 +40,32 @@ function TopNav({ title = 'Dashboard', onMenuClick }) {
       <div className="flex shrink-0 flex-wrap items-center justify-end gap-3 sm:gap-4 lg:justify-self-end">
         <button
           type="button"
-          className="hidden items-center gap-2 rounded-xl px-3 py-2 text-sm text-[#151D48] hover:bg-white sm:flex"
+          className="hidden items-center gap-2 rounded-xl px-3 py-2 text-sm text-text-primary hover:bg-card-bg sm:flex"
         >
           <span className="text-base">🇺🇸</span>
           <span className="font-medium">Eng (US)</span>
-          <ChevronDown size={14} className="text-[#737791]" />
+          <ChevronDown size={14} className="text-text-secondary" />
         </button>
 
         <button
           type="button"
-          className="relative shrink-0 rounded-xl bg-[#FFF8E6] p-2.5 hover:bg-[#FFF3D6]"
+          className="relative shrink-0 rounded-xl bg-accent-yellow-light p-2.5 hover:bg-accent-orange-light"
         >
-          <Bell size={20} className="text-[#FF947A]" />
-          <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#FA5A7D]" />
+          <Bell size={20} className="text-accent-orange" />
+          <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-accent-pink" />
         </button>
 
-        <button type="button" className="flex shrink-0 items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-white">
+        <button type="button" className="flex shrink-0 items-center gap-3 rounded-xl px-2 py-1.5 hover:bg-card-bg">
           <img
             src="https://i.pravatar.cc/40?img=12"
             alt="Musfiq"
             className="h-10 w-10 shrink-0 rounded-full object-cover"
           />
           <div className="hidden min-w-0 text-left sm:block">
-            <p className="truncate text-sm font-semibold text-[#151D48]">Musfiq</p>
-            <p className="text-xs text-[#737791]">Admin</p>
+            <p className="truncate text-sm font-semibold text-text-primary">Musfiq</p>
+            <p className="text-xs text-text-secondary">Admin</p>
           </div>
-          <ChevronDown size={14} className="hidden shrink-0 text-[#737791] sm:block" />
+          <ChevronDown size={14} className="hidden shrink-0 text-text-secondary sm:block" />
         </button>
       </div>
     </header>

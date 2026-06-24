@@ -3,9 +3,9 @@ function Button({ children, className = '', variant = 'default', size = 'default
     'inline-flex items-center justify-center gap-2 rounded-xl text-sm font-medium transition-colors disabled:pointer-events-none disabled:opacity-50'
 
   const variants = {
-    default: 'bg-[#5D5FEF] text-white hover:bg-[#4a4ed4]',
-    outline: 'border border-[#ECEFF5] bg-white text-[#151D48] hover:bg-[#F8F9FB]',
-    ghost: 'text-[#737791] hover:bg-[#F8F9FB] hover:text-[#151D48]',
+    default: 'bg-primary text-white hover:bg-primary-dark',
+    outline: 'border border-border bg-card-bg text-text-primary hover:bg-page-bg',
+    ghost: 'text-text-secondary hover:bg-page-bg hover:text-text-primary',
   }
 
   const sizes = {

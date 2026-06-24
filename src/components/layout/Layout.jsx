@@ -7,12 +7,12 @@ function Layout({ title }) {
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-[#F8F9FB]">
+    <div className="min-h-screen bg-page-bg">
       {sidebarOpen && (
         <button
           type="button"
           aria-label="Close menu"
-          className="fixed inset-0 z-40 bg-[#151D48]/30 lg:hidden"
+          className="fixed inset-0 z-40 bg-text-primary/30 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}

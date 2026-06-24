@@ -16,7 +16,7 @@ function TableBody({ children }) {
 
 function TableRow({ className = '', children, ...props }) {
   return (
-    <tr className={`border-b border-[#F8F9FB] transition-colors hover:bg-[#F8F9FB]/60 ${className}`} {...props}>
+    <tr className={`border-b border-page-bg transition-colors hover:bg-page-bg/60 ${className}`} {...props}>
       {children}
     </tr>
   )
@@ -24,14 +24,14 @@ function TableRow({ className = '', children, ...props }) {
 
 function TableHead({ className = '', children }) {
   return (
-    <th className={`pb-3 pr-6 text-left text-xs font-medium text-[#737791] ${className}`}>
+    <th className={`pb-3 pr-6 text-left text-xs font-medium text-text-secondary ${className}`}>
       {children}
     </th>
   )
 }
 
 function TableCell({ className = '', children }) {
-  return <td className={`py-4 pr-6 text-[#737791] ${className}`}>{children}</td>
+  return <td className={`py-4 pr-6 text-text-secondary ${className}`}>{children}</td>
 }
 
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell }

@@ -38,8 +38,8 @@ function App() {
 
 function PlaceholderPage({ title }) {
   return (
-    <div className="flex h-64 items-center justify-center rounded-2xl bg-white shadow-sm">
-      <p className="text-lg text-[#8A8A8A]">{title} — Coming Soon</p>
+    <div className="flex h-64 items-center justify-center rounded-2xl bg-card-bg shadow-sm">
+      <p className="text-lg text-text-muted">{title} — Coming Soon</p>
     </div>
   )
 }

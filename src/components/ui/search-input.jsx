@@ -39,13 +39,13 @@ function SearchInput({
   }
 
   const variants = {
-    pill: 'h-11 rounded-full border-0 bg-white shadow-[0_2px_12px_rgba(0,0,0,0.05)]',
-    default: 'h-10 rounded-xl border border-[#ECEFF5] bg-white shadow-none',
+    pill: 'h-11 rounded-full border-0 bg-card-bg shadow-[0_2px_12px_rgba(0,0,0,0.05)]',
+    default: 'h-10 rounded-xl border border-border bg-card-bg shadow-none',
   }
 
   return (
     <div className={`flex w-full items-center overflow-hidden ${variants[variant]} ${className}`}>
-      <span className="flex h-full w-12 shrink-0 items-center justify-center text-[#5D5FEF]">
+      <span className="flex h-full w-12 shrink-0 items-center justify-center text-primary">
         <Search size={18} strokeWidth={2} />
       </span>
       <input
@@ -54,7 +54,7 @@ function SearchInput({
         value={isControlled ? value : internalValue}
         onChange={handleChange}
         placeholder={placeholder}
-        className="h-full min-w-0 flex-1 border-0 bg-transparent pr-5 text-sm text-[#151D48] outline-none placeholder:text-[#A3A9C2] focus:ring-0"
+        className="h-full min-w-0 flex-1 border-0 bg-transparent pr-5 text-sm text-text-primary outline-none placeholder:text-text-muted focus:ring-0"
       />
     </div>
   )

@@ -8,14 +8,14 @@ function getColumns() {
       header: ({ column }) => (
         <Button
           variant="ghost"
-          className="h-auto p-0 font-medium text-[#737791] hover:bg-transparent hover:text-[#151D48]"
+          className="h-auto p-0 font-medium text-text-secondary hover:bg-transparent hover:text-text-primary"
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Name
           <ArrowUpDown size={14} />
         </Button>
       ),
-      cell: ({ row }) => <span className="font-medium text-[#151D48]">{row.getValue('name')}</span>,
+      cell: ({ row }) => <span className="font-medium text-text-primary">{row.getValue('name')}</span>,
     },
     {
       accessorKey: 'email',
@@ -25,7 +25,7 @@ function getColumns() {
       id: 'company_name',
       accessorFn: (row) => row.company?.name,
       header: 'Company Name',
-      cell: ({ row }) => <span className="text-[#151D48]">{row.original.company?.name}</span>,
+      cell: ({ row }) => <span className="text-text-primary">{row.original.company?.name}</span>,
     },
     {
       id: 'city',

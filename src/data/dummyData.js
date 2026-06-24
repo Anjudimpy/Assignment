@@ -5,8 +5,8 @@ export const salesStats = [
     value: '$1k',
     change: '+8%',
     changeLabel: 'from yesterday',
-    bgColor: 'bg-[#FFE2E5]',
-    iconBg: 'bg-[#FA5A7D]',
+    bgColor: 'bg-accent-pink-light',
+    iconBg: 'bg-accent-pink',
     icon: '💰',
   },
   {
@@ -15,8 +15,8 @@ export const salesStats = [
     value: '300',
     change: '+5%',
     changeLabel: 'from yesterday',
-    bgColor: 'bg-[#FFF4DE]',
-    iconBg: 'bg-[#FF947A]',
+    bgColor: 'bg-accent-orange-light',
+    iconBg: 'bg-accent-orange',
     icon: '📋',
   },
   {
@@ -25,8 +25,8 @@ export const salesStats = [
     value: '5',
     change: '+1.2%',
     changeLabel: 'from yesterday',
-    bgColor: 'bg-[#DCFCE7]',
-    iconBg: 'bg-[#3CD856]',
+    bgColor: 'bg-success-light',
+    iconBg: 'bg-success',
     icon: '📦',
   },
   {
@@ -35,8 +35,8 @@ export const salesStats = [
     value: '8',
     change: '+0.5%',
     changeLabel: 'from yesterday',
-    bgColor: 'bg-[#F3E8FF]',
-    iconBg: 'bg-[#BF83FF]',
+    bgColor: 'bg-accent-purple-light',
+    iconBg: 'bg-accent-purple',
     icon: '👤',
   },
 ]
@@ -86,10 +86,10 @@ export const targetVsRealityData = [
 ]
 
 export const topProducts = [
-  { id: '01', name: 'Home Decor Range', popularity: 78, sales: 45, color: 'bg-blue-500' },
-  { id: '02', name: 'Disney Princess Pink Bag', popularity: 62, sales: 29, color: 'bg-cyan-400' },
-  { id: '03', name: 'Bathroom Essentials', popularity: 51, sales: 18, color: 'bg-teal-400' },
-  { id: '04', name: 'Apple Smartwatches', popularity: 45, sales: 25, color: 'bg-indigo-400' },
+  { id: '01', name: 'Home Decor Range', popularity: 78, sales: 45, color: 'bg-primary' },
+  { id: '02', name: 'Disney Princess Pink Bag', popularity: 62, sales: 29, color: 'bg-success' },
+  { id: '03', name: 'Bathroom Essentials', popularity: 51, sales: 18, color: 'bg-accent-purple' },
+  { id: '04', name: 'Apple Smartwatches', popularity: 45, sales: 25, color: 'bg-accent-orange' },
 ]
 
 export const volumeVsServiceData = [
@@ -102,10 +102,10 @@ export const volumeVsServiceData = [
 ]
 
 export const mapRegions = [
-  { name: 'North America', color: '#FF947A', x: 15, y: 35, width: 22, height: 18 },
-  { name: 'South America', color: '#FA5A7D', x: 25, y: 58, width: 12, height: 22 },
-  { name: 'Europe', color: '#5B5FEF', x: 45, y: 28, width: 14, height: 14 },
-  { name: 'Africa', color: '#BF83FF', x: 46, y: 45, width: 14, height: 20 },
-  { name: 'Asia', color: '#3CD856', x: 58, y: 25, width: 28, height: 22 },
-  { name: 'Australia', color: '#FFCF6C', x: 72, y: 62, width: 14, height: 10 },
+  { name: 'North America', color: 'var(--color-accent-orange)', x: 15, y: 35, width: 22, height: 18 },
+  { name: 'South America', color: 'var(--color-accent-pink)', x: 25, y: 58, width: 12, height: 22 },
+  { name: 'Europe', color: 'var(--color-primary)', x: 45, y: 28, width: 14, height: 14 },
+  { name: 'Africa', color: 'var(--color-accent-purple)', x: 46, y: 45, width: 14, height: 20 },
+  { name: 'Asia', color: 'var(--color-success)', x: 58, y: 25, width: 28, height: 22 },
+  { name: 'Australia', color: 'var(--color-accent-yellow)', x: 72, y: 62, width: 14, height: 10 },
 ]

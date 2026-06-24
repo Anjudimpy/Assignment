@@ -12,7 +12,7 @@ function TodaysSales() {
         action={
           <button
             type="button"
-            className="flex items-center gap-2 rounded-xl border border-[#ECEFF5] bg-white px-4 py-2 text-[13px] font-medium text-[#737791] transition-colors hover:bg-[#F8F9FB]"
+            className="flex items-center gap-2 rounded-xl border border-border bg-card-bg px-4 py-2 text-[13px] font-medium text-text-secondary transition-colors hover:bg-page-bg"
           >
             <Download size={15} />
             Export
@@ -31,11 +31,11 @@ function TodaysSales() {
             >
               {stat.icon}
             </div>
-            <p className="text-xl font-bold text-[#151D48]">{stat.value}</p>
-            <p className="mt-1 text-[13px] font-medium text-[#151D48]">{stat.label}</p>
+            <p className="text-xl font-bold text-text-primary">{stat.value}</p>
+            <p className="mt-1 text-[13px] font-medium text-text-primary">{stat.label}</p>
             <p className="mt-auto pt-2 text-[11px] leading-relaxed">
-              <span className="font-semibold text-[#3CD856]">{stat.change}</span>{' '}
-              <span className="text-[#737791]">{stat.changeLabel}</span>
+              <span className="font-semibold text-success">{stat.change}</span>{' '}
+              <span className="text-text-secondary">{stat.changeLabel}</span>
             </p>
           </div>
         ))}

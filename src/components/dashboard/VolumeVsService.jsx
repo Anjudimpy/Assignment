@@ -10,6 +10,7 @@ import {
 import Card from './Card'
 import CardHeader from './CardHeader'
 import { volumeVsServiceData } from '../../data/dummyData'
+import { chartColors } from '../../theme/chartTheme'
 
 function VolumeVsService() {
   return (
@@ -21,9 +22,9 @@ function VolumeVsService() {
           <XAxis dataKey="label" hide />
           <YAxis hide />
           <Tooltip />
-          <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 11, color: '#737791' }} />
-          <Bar dataKey="volume" name="Volume 1,135" fill="#5D5FEF" radius={[3, 3, 0, 0]} barSize={14} />
-          <Bar dataKey="services" name="Services 635" fill="#3CD856" radius={[3, 3, 0, 0]} barSize={14} />
+          <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: 11, color: chartColors.tick }} />
+          <Bar dataKey="volume" name="Volume 1,135" fill={chartColors.primary} radius={[3, 3, 0, 0]} barSize={14} />
+          <Bar dataKey="services" name="Services 635" fill={chartColors.success} radius={[3, 3, 0, 0]} barSize={14} />
         </BarChart>
       </ResponsiveContainer>
       </div>

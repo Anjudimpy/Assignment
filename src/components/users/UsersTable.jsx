@@ -185,8 +185,8 @@ const UsersTable = () => {
   if (isLoading) {
     return (
       <Card className="flex flex-col items-center justify-center py-20">
-        <Loader2 size={40} className="animate-spin text-[#5D5FEF]" />
-        <p className="mt-4 text-sm text-[#737791]">Loading users...</p>
+        <Loader2 size={40} className="animate-spin text-primary" />
+        <p className="mt-4 text-sm text-text-secondary">Loading users...</p>
       </Card>
     )
   }
@@ -225,7 +225,7 @@ const UsersTable = () => {
         <select
           value={cityFilter}
           onChange={(event) => setCityFilter(event.target.value)}
-          className="h-10 rounded-xl border border-[#ECEFF5] bg-white px-4 text-sm text-[#151D48] outline-none focus:border-[#5D5FEF] focus:ring-2 focus:ring-[#5D5FEF]/20"
+          className="h-10 rounded-xl border border-border bg-card-bg px-4 text-sm text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
         >
           <option value="">All Cities</option>
           {allCities.map((city) => (
@@ -264,7 +264,7 @@ const UsersTable = () => {
         </DropdownMenu>
       </div>
 
-      <div className="w-full flex-1 rounded-xl border border-[#ECEFF5]">
+      <div className="w-full flex-1 rounded-xl border border-border">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -302,7 +302,7 @@ const UsersTable = () => {
       </div>
 
       <div className="flex w-full flex-col items-center justify-center gap-2 p-2 sm:flex-row sm:justify-between">
-        <span className="text-sm text-[#737791]">
+        <span className="text-sm text-text-secondary">
           {`Page ${table.getState().pagination.pageIndex + 1} of ${table.getPageCount() || 1}`}
         </span>
         <div className="flex items-center justify-center space-x-2">
