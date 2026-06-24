@@ -18,7 +18,7 @@ function Layout({ title }) {
       )}
 
       <div
-        className="lg:grid lg:min-h-screen"
+        className="lg:grid lg:min-h-screen "
         style={{ gridTemplateColumns: 'var(--sidebar-width) minmax(0, 1fr)' }}
       >
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />

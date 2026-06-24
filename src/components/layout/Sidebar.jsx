@@ -25,14 +25,10 @@ const navItems = [
 
 function Sidebar({ isOpen, onClose }) {
   return (
-    <aside
-      className={`fixed inset-y-0 left-0 z-50 flex h-screen w-[var(--sidebar-width)] flex-col overflow-hidden bg-card-bg transition-transform duration-300 ease-in-out lg:sticky lg:top-0 lg:translate-x-0 ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}
-    >
+    <aside className="flex h-screen w-64 flex-col bg-card-bg">
       <div className="flex shrink-0 items-center justify-between px-5 pb-4 pt-5">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-primary">
+        <div className="flex items-center gap-2.5 ">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
             <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
               <path d="M4 4L10 16L16 4" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -49,7 +45,7 @@ function Sidebar({ isOpen, onClose }) {
         </button>
       </div>
 
-      <nav className="sidebar-nav flex flex-1 flex-col gap-0.5 overflow-y-auto px-4">
+      <nav className="sidebar-nav flex flex-1 flex-col gap-5 overflow-y-auto px-4">
         {navItems.map(({ to, label, icon: Icon }) => (
           <NavLink
             key={to}
@@ -57,14 +53,14 @@ function Sidebar({ isOpen, onClose }) {
             end={to === '/'}
             onClick={onClose}
             className={({ isActive }) =>
-              `flex items-center gap-2.5 rounded-xl px-3 py-2 text-[13px] font-medium transition-colors ${
+              `flex items-center w-40   gap-2.5 rounded-xl text-[18px]  font-medium transition-colors ${
                 isActive
                   ? 'bg-primary text-white'
                   : 'text-text-secondary hover:bg-page-bg hover:text-text-primary'
               }`
             }
           >
-            <Icon size={17} className="shrink-0" strokeWidth={1.75} />
+            <Icon size={24} className="" />
             <span className="truncate">{label}</span>
           </NavLink>
         ))}
