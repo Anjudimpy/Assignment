@@ -25,7 +25,11 @@ const navItems = [
 
 function Sidebar({ isOpen, onClose }) {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 bg-card-bg">
+    <aside
+  className={`fixed left-0 top-0 z-50 h-screen w-64 bg-card-bg transition-transform duration-300 lg:translate-x-0 ${
+    isOpen ? "translate-x-0" : "-translate-x-full"
+  }`}
+>
       <div className="flex shrink-0 items-center justify-between px-5 pb-4 pt-5">
         <div className="flex items-center gap-2.5 ">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">

@@ -4,27 +4,34 @@ import Sidebar from './Sidebar'
 import TopNav from './TopNav'
 
 function Layout({ title }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
   return (
     <div className="min-h-screen bg-page-bg">
-      {sidebarOpen && (
+      {/* Overlay */}
+      {isSidebarOpen && (
         <button
           type="button"
           aria-label="Close menu"
-          className="fixed inset-0 z-40 bg-text-primary/30 lg:hidden"
-          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 z-40 bg-black/40 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
         />
       )}
 
-      <div
-        className="min-h-screen "
-      
-      >
-        <Sidebar />
-         <main className="ml-64 min-h-screen overflow-y-auto px-5 py-5">
+      <div className="min-h-screen">
+        {/* Sidebar */}
+        <Sidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
+
+        {/* Main Content */}
+        <main className="min-h-screen lg:ml-64 px-4 py-5 sm:px-5">
           <div className="mx-auto w-full max-w-[1440px]">
-            <TopNav title={title} onMenuClick={() => setSidebarOpen(true)} />
+            <TopNav
+              title={title}
+              onMenuClick={() => setIsSidebarOpen(true)}
+            />
             <Outlet />
           </div>
         </main>

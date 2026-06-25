@@ -1,37 +1,72 @@
-import Card from './Card'
-import CardHeader from './CardHeader'
-import { mapRegions } from '../../data/dummyData'
+import Card from "./Card";
+import CardHeader from "./CardHeader";
+import {
+  ComposableMap,
+  Geographies,
+  Geography,
+} from "react-simple-maps";
+
+const geoUrl =
+  "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const countryColors = {
+  840: "#F5A623", // USA
+  76: "#FF4D6D", // Brazil
+  156: "#7C4DFF", // China
+  356: "#00A6A6", // India
+  360: "#00C896", // Indonesia
+  180: "#5B8DEF", // DR Congo
+};
 
 function SalesMapping() {
   return (
     <Card className="col-span-12 md:col-span-6 lg:col-span-3">
       <CardHeader title="Sales Mapping by Country" />
-      <div className="relative h-[210px] w-full min-w-0 overflow-hidden rounded-xl bg-page-bg p-3">
-        <svg viewBox="0 0 100 80" className="h-full w-full" preserveAspectRatio="xMidYMid meet">
-          <rect width="100" height="80" fill="var(--color-map-bg)" rx="2" />
-          {mapRegions.map((region) => (
-            <ellipse
-              key={region.name}
-              cx={region.x + region.width / 2}
-              cy={region.y + region.height / 2}
-              rx={region.width / 2}
-              ry={region.height / 2}
-              fill={region.color}
-              opacity={0.85}
-            />
-          ))}
-        </svg>
-        <div className="absolute bottom-2 left-2 flex flex-wrap gap-1.5">
-          {mapRegions.map((region) => (
-            <span key={region.name} className="flex items-center gap-1 text-[10px] text-text-secondary">
-              <span className="inline-block h-2 w-2 rounded-full" style={{ backgroundColor: region.color }} />
-              {region.name}
-            </span>
-          ))}
-        </div>
+
+      <div className="rounded-xl bg-page-bg">
+        <ComposableMap
+          projection="geoNaturalEarth1"
+          projectionConfig={{
+            scale: 155,
+          }}
+          style={{
+            width: "100%",
+            height: "220px",
+          }}
+        >
+          <Geographies geography={geoUrl}>
+            {({ geographies }) =>
+              geographies.map((geo) => {
+                const id = Number(geo.id);
+
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={countryColors[id] || "#E8E8E8"}
+                    stroke="#FFFFFF"
+                    strokeWidth={0.4}
+                    style={{
+                      default: {
+                        outline: "none",
+                      },
+                      hover: {
+                        fill: countryColors[id] || "#D1D5DB",
+                        outline: "none",
+                        cursor: "pointer",
+                      },
+                      pressed: {
+                        outline: "none",
+                      },
+                    }}
+                  />
+                );
+              })
+            }
+          </Geographies>
+        </ComposableMap>
       </div>
     </Card>
-  )
+  );
 }
 
-export default SalesMapping
+export default SalesMapping;
