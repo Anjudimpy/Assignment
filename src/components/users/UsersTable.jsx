@@ -1,6 +1,27 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { useQuery } from '@tanstack/react-query'
+import getColumns from './get-columns'
+import Card from '../dashboard/Card'
+import CardHeader from '../dashboard/CardHeader'
+import { SearchInput } from '../ui/search-input'
+
+import { Button } from '../ui/button'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table'
+
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '../ui/dropdown-menu'
 import {
   flexRender,
   getCoreRowModel,
@@ -17,25 +38,6 @@ import {
   Loader2,
   AlertCircle,
 } from 'lucide-react'
-import getColumns from './get-columns'
-import Card from '../dashboard/Card'
-import CardHeader from '../dashboard/CardHeader'
-import { SearchInput } from '../ui/search-input'
-import { Button } from '../ui/button'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '../ui/table'
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
 
 const API_URL = 'https://jsonplaceholder.typicode.com/users'
 const PAGE_SIZE = 10
@@ -99,10 +101,6 @@ const UsersTable = () => {
   const [pageCount, setPageCount] = useState(1)
   const [allCities, setAllCities] = useState([])
 
-  useEffect(() => {
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }))
-  }, [globalFilter, cityFilter])
-
   const getAllUsers = async ({ queryKey }) => {
     const [, search, city, page, sortColumn, sortDesc] = queryKey
 
@@ -147,9 +145,7 @@ const UsersTable = () => {
     retry: 1,
     placeholderData: (previous) => previous,
   })
-
-  const tableData = useMemo(() => data?.rows ?? [], [data])
-
+  const tableData = data?.rows ?? []
   const resetFilters = () => {
     setFilter('')
     setGlobalFilter('')
@@ -160,7 +156,6 @@ const UsersTable = () => {
   }
 
   const columns = getColumns()
-
   const table = useReactTable({
     columns,
     data: tableData,
@@ -222,18 +217,25 @@ const UsersTable = () => {
           debounceMs={500}
         />
 
-        <select
-          value={cityFilter}
-          onChange={(event) => setCityFilter(event.target.value)}
-          className="h-10 rounded-xl border border-border bg-card-bg px-4 text-sm text-text-primary outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
-        >
-          <option value="">All Cities</option>
-          {allCities.map((city) => (
-            <option key={city} value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
+      <select
+  value={cityFilter}
+  onChange={(event) => {
+    setCityFilter(event.target.value)
+    setPagination((prev) => ({
+      ...prev,
+      pageIndex: 0,
+    }))
+  }}
+  className="h-10 rounded-xl border border-border bg-card-bg px-4 text-sm text-text-primary outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+>
+  <option value="">All Cities</option>
+
+  {allCities.map((city) => (
+    <option key={city} value={city}>
+      {city}
+    </option>
+  ))}
+</select>
 
         <Button onClick={resetFilters} variant="outline">
           <ListRestart size={16} />
