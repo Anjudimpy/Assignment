@@ -279,10 +279,10 @@ const UsersTable = () => {
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
+          <TableBody >
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}

@@ -31,7 +31,7 @@ function TableHead({ className = '', children }) {
 }
 
 function TableCell({ className = '', children }) {
-  return <td className={`py-4 pr-6 text-text-secondary ${className}`}>{children}</td>
+  return <td className={`py-4 px-6 text-text-secondary ${className}`} >{children}</td>
 }
 
 export { Table, TableHeader, TableBody, TableRow, TableHead, TableCell }

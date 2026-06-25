@@ -18,11 +18,11 @@ function Layout({ title }) {
       )}
 
       <div
-        className="lg:grid lg:min-h-screen "
-        style={{ gridTemplateColumns: 'var(--sidebar-width) minmax(0, 1fr)' }}
+        className="min-h-screen "
+      
       >
-        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="min-w-0 overflow-x-hidden px-5 py-5 sm:px-7 sm:py-6 lg:px-9 lg:py-7">
+        <Sidebar />
+         <main className="ml-64 min-h-screen overflow-y-auto px-5 py-5">
           <div className="mx-auto w-full max-w-[1440px]">
             <TopNav title={title} onMenuClick={() => setSidebarOpen(true)} />
             <Outlet />

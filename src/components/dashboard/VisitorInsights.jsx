@@ -15,7 +15,7 @@ import { chartColors } from '../../theme/chartTheme'
 
 function VisitorInsights() {
   return (
-    <Card className="col-span-12 h-full lg:col-span-4">
+    <Card className="col-span-12 max-h-[320px] lg:col-span-4">
       <CardHeader title="Visitor Insights" />
       <div className="min-h-0 w-full flex-1">
         <ResponsiveContainer width="100%" height="100%" minHeight={220}>

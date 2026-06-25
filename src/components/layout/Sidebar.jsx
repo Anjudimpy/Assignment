@@ -25,7 +25,7 @@ const navItems = [
 
 function Sidebar({ isOpen, onClose }) {
   return (
-    <aside className="flex h-screen w-64 flex-col bg-card-bg">
+    <aside className="fixed left-0 top-0 h-screen w-64 bg-card-bg">
       <div className="flex shrink-0 items-center justify-between px-5 pb-4 pt-5">
         <div className="flex items-center gap-2.5 ">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">

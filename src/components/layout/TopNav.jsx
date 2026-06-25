@@ -13,7 +13,7 @@ function TopNav({ title = 'Dashboard', onMenuClick }) {
   }, [debouncedSearch, title])
 
   return (
-    <header className="mb-6 grid grid-cols-1 items-center gap-4 lg:mb-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)_minmax(0,1fr)] lg:gap-6">
+    <header className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
       <div className="flex min-w-0 items-center gap-3">
         <button
           type="button"
@@ -26,7 +26,7 @@ function TopNav({ title = 'Dashboard', onMenuClick }) {
         <h1 className="truncate text-xl font-bold text-text-primary sm:text-2xl">{title}</h1>
       </div>
 
-      <div className="w-full min-w-0 lg:max-w-xl lg:justify-self-center">
+      <div className="lg:min-w-lg">
         <SearchInput
           variant="pill"
           placeholder="Search here..."
